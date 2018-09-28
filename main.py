@@ -75,8 +75,8 @@ def email_validate(name4):
         if '.' in name4:
             #if name4[length-5] == '.':
             return True
-        else:
-            return False
+    else:
+        return False
 
 @app.route("/", methods=['POST'])
 def login_page():
@@ -127,17 +127,17 @@ def login_page():
             email_error="Email has spaces. Please remove and re-enter a valid email"
         elif email_validate(email)==False:
             email_error="Email is not valid. Please enter a valid email"
-        else:
-            email_error=''
+    else:
+        email_error=''
     
-    #if (not password_error and not username_error and not veri_password_error and not email_error):
-    if (password_error=='' and username_error=='' and veri_password_error=='' and email_error==''):
+    if (not password_error and not username_error and not veri_password_error and not email_error):
+    #if (password_error=='' and username_error=='' and veri_password_error=='' and email_error==''):
         #return 'success'
         return redirect('/welcome?username={0}'.format(username))
-    elif (not password_error or not veri_password_error):
-        return form.format(username=username,email=email,password='',verify_password='',password_error=password_error,veri_password_error=veri_password_error,email_error='',username_error='')
-    elif (not email_error):
-        return form.format(username=username,email=email,password='',verify_password='',password_error='',veri_password_error='',email_error=email_error,username_error='')
+    elif (not password_error and not veri_password_error and not email_error):
+        return form.format(username='',email=email,password='',verify_password='',password_error='',veri_password_error='',email_error='',username_error=username_error)
+    elif (not password_error and not veri_password_error and not username_error):
+        return form.format(username=username,email='',password='',verify_password='',password_error='',veri_password_error='',email_error=email_error,username_error='')
     else:
         return form.format(username=username, password=password, verify_password=verify_password, email=email, username_error=username_error,password_error=password_error,veri_password_error=veri_password_error, email_error=email_error)
 
