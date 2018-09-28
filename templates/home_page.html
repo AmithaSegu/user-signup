@@ -1,25 +1,26 @@
 {% extends "base.html" %}
 {% block content %}
+<head>
+    <link href="../templates/style_user_signup.css" type="text/css" rel="stylesheet">
+</head>
 <body>
     <h1>SIGNUP</h1>
     <form method='POST'>
-        <label class="text_box" for="username">USERNAME:
-            <input type="text", name="username" value='{{username}}'/>
+	<div class='row'>
+        <div><label for="username">USERNAME:</label>
+            <input type="text", name="username" value='{{username}}'/></div>
             <p class="error">{{username_error}}</p>
-        </label>
-        <label class=text_box for="password">Password:
-            <input type="password", name="password" value='{{password}}'/>
+        <div><label for="password">Password:</label>
+            <input type="password", name="password" value='{{password}}'/></div>
             <p class="error">{{password_error}}</p>
-        </label><br><br>
-        <label class=text_box for="verify_password">Verify Password:
-            <input type="password", name="verify_password" value='{{verify_password}}'/>
+        <div><label for="verify_password">Verify Password:</label>
+            <input type="password", name="verify_password" value='{{verify_password}}'/></div>
             <p class="error">{{veri_password_error}}</p>
-        </label><br><br>
-        <label class=text_box   for="email">Email(optional):
-            <input type="text", name="email"  value='{{email}}'/>
+        <div><label for="email">Email(optional):</label>
+            <input type="text", name="email"  value='{{email}}'/> </div>
             <p class="error">{{email_error}}</p>
-        </label><br><br>
-            <input type="submit", value='SUBMIT' />
+        <div class='b'> <input type="submit", value='SUBMIT', class='button'/> </div>
+    </div>
     </form>
 </body>
 {% endblock %}
