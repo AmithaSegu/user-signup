@@ -1,50 +1,16 @@
-from flask import Flask, request, redirect
+from flask import Flask, request, redirect, render_template
 import re
+import os
+import jinja2
 
 app = Flask(__name__)
 app.config['DEBUG'] = True      # displays runtime errors in the browser, too
 
-form="""
-<!DOCTYPE html>
-    <html>
-        <style>
-        .text_box{{
-            <!--margin-right:1000px;-->
-            font-color: blue;
-        }}
-        .error{{
-            text-color:red;
-        }}
-        </style>
-        <body>
-        <h1>SIGNUP</h1>
-        <form method='POST'>
-            <label class="text_box" for="username">USERNAME:
-                <input type="text", name="username" value='{username}'/>
-                <p class="error">{username_error}</p>
-            </label>
-            <label class=text_box for="password">Password:
-                <input type="password", name="password" value='{password}'/>
-                <p class="error">{password_error}</p>
-            </label><br><br>
-            <label class=text_box for="verify_password">Verify Password:
-                <input type="password", name="verify_password" value='{verify_password}'/>
-                <p class="error">{veri_password_error}</p>
-            </label><br><br>
-            <label class=text_box   for="email">Email(optional):
-                <input type="text", name="email"  value='{email}'/>
-                <p class="error">{email_error}</p>
-            </label><br><br>
-            <input type="submit", value='SUBMIT' />
-        </form>
-        </body>
-    </html>
-"""
-
 @app.route("/")
 def index():
     #return form
-    return form.format(username='', username_error='', password='', password_error='',verify_password='', veri_password_error='',email='', email_error='')
+    #return form.format(username='', username_error='', password='', password_error='',verify_password='', veri_password_error='',email='', email_error='')
+    return render_template('home_page.html')
 
 #@app.route("/")
 #def display_signup_form():
@@ -75,6 +41,8 @@ def email_validate(name4):
         if '.' in name4:
             #if name4[length-5] == '.':
             return True
+        else:
+            return False
     else:
         return False
 
@@ -133,17 +101,21 @@ def login_page():
     if (not password_error and not username_error and not veri_password_error and not email_error):
     #if (password_error=='' and username_error=='' and veri_password_error=='' and email_error==''):
         #return 'success'
-        return redirect('/welcome?username={0}'.format(username))
+        #return redirect('/welcome?username={0}'.format(username))
+        return render_template('welcome.html', name=username)
     elif (not password_error and not veri_password_error and not email_error):
-        return form.format(username='',email=email,password='',verify_password='',password_error='',veri_password_error='',email_error='',username_error=username_error)
+        return render_template('home_page.html',username='',email=email,password='',verify_password='',password_error='',veri_password_error='',email_error='',username_error=username_error)
     elif (not password_error and not veri_password_error and not username_error):
-        return form.format(username=username,email='',password='',verify_password='',password_error='',veri_password_error='',email_error=email_error,username_error='')
+        return render_template('home_page.html',username=username,email='',password='',verify_password='',password_error='',veri_password_error='',email_error=email_error,username_error='')
+    elif (not username_error and not email_error):
+        return render_template('home_page.html',username=username,email=email,password='',verify_password='',password_error=password_error,veri_password_error=veri_password_error,email_error='',username_error='')
     else:
-        return form.format(username=username, password=password, verify_password=verify_password, email=email, username_error=username_error,password_error=password_error,veri_password_error=veri_password_error, email_error=email_error)
+        return render_template('home_page.html',username=username, password=password, verify_password=verify_password, email=email, username_error=username_error,password_error=password_error,veri_password_error=veri_password_error, email_error=email_error)
 
-@app.route('/welcome')
-def welcome_page():
-    username=request.args.get('username')
-    return '<h1> WELCOME! {0} </h1>'.format(username)
+#@app.route('/welcome')
+#def welcome_page():
+#    username=request.args.get('username')
+#    #return '<h1> WELCOME! {0} </h1>'.format(username)
+#    render_template('welcome.html', name=username)
 
 app.run()

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<body>
+    <h1>SIGNUP</h1>
+    <form method='POST'>
+        <label class="text_box" for="username">USERNAME:
+            <input type="text", name="username" value='{{username}}'/>
+            <p class="error">{{username_error}}</p>
+        </label>
+        <label class=text_box for="password">Password:
+            <input type="password", name="password" value='{{password}}'/>
+            <p class="error">{{password_error}}</p>
+        </label><br><br>
+        <label class=text_box for="verify_password">Verify Password:
+            <input type="password", name="verify_password" value='{{verify_password}}'/>
+            <p class="error">{{veri_password_error}}</p>
+        </label><br><br>
+        <label class=text_box   for="email">Email(optional):
+            <input type="text", name="email"  value='{{email}}'/>
+            <p class="error">{{email_error}}</p>
+        </label><br><br>
+            <input type="submit", value='SUBMIT' />
+    </form>
+</body>
+{% endblock %}
